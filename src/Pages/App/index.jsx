@@ -7,6 +7,8 @@ import MyOrders from "../MyOrder";
 import NotFound from "../NotFound";
 import SignIn from "../SignIn";
 import Navbar from "../../Components/Navbar";
+import { ShoppingCartProvider } from "../../Context";
+import CheckoutSideMenu from "../../Components/CheckoutSideMenu";
 
 import "./App.css";
 
@@ -43,10 +45,13 @@ const AppRoutes = () => {
 const App = () => {
   return (
     <div className="App">
-      <BrowserRouter>
-        <AppRoutes />
-        <Navbar />
-      </BrowserRouter>
+      <ShoppingCartProvider>
+        <BrowserRouter>
+          <AppRoutes />
+          <Navbar />
+          <CheckoutSideMenu />
+        </BrowserRouter>
+      </ShoppingCartProvider>
     </div>
   );
 };

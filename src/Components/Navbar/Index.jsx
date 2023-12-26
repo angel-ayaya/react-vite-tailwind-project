@@ -1,16 +1,21 @@
-import { NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom"
+import { useContext } from "react"
+import { ShoppingCartContext } from "../../Context"
+import { ShoppingBagIcon } from "@heroicons/react/24/outline"
+
 
 const Navbar = () => {
-  const activeStyle = "underline";
+  const context = useContext(ShoppingCartContext);
+  const activeStyle = "underline underline-offset-4";
 
   return (
-    <nav className="flex justify-between items-center fixed z-10 top-0 w-full py-5 px-8 text-sm font-light">
+    <nav className="flex justify-between items-center fixed z-10 top-0 w-full py-5 px-8 text-sm font-light bg-white shadow-sm">
       <ul className="flex items-center gap-3">
         <li className="font-semibold text-lg">
           <NavLink
             to="/"
           >
-            Tienduki
+            Abarrotes
           </NavLink>
         </li>
         <li>
@@ -98,14 +103,18 @@ const Navbar = () => {
         <li>
           <NavLink
             to="/cart"
-            className={({ isActive }) => `${isActive ? activeStyle : ""}`}
+            className={({ isActive }) => `${isActive ? activeStyle : ""} flex`}
           >
-            🛒
+
+            <ShoppingBagIcon className="h-5 w-5" />
+            <div>
+              {context.count}
+            </div>
           </NavLink>
         </li>
       </ul>
     </nav>
-  );
-};
+  )
+}
 
 export default Navbar;
