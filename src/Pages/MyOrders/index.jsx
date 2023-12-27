@@ -1,15 +1,21 @@
-import Layout from "../../Components/Layout"
+import { useContext } from "react";
+import Layout from "../../Components/Layout";
+import OrdersCard from "../../Components/OrdersCard";
+import { ShoppingCartContext } from "../../Context";
+import { Link } from "react-router-dom";
 
 function MyOrders() {
+  const context = useContext(ShoppingCartContext);
 
-    return (
-      <div className='bg-black'>
-        <h1 className="text-3xl font-bold text-white">
-          MyOrders
-        </h1>
-      </div>
-    )
-  }
-  
-  export default MyOrders
-  
+  return (
+    <Layout>
+      {context.order.map( (order, index) => (
+        <Link key={index} to={`/my-orders/${order.id}`}>
+          <OrdersCard order={order} />
+        </Link>
+      ))}
+    </Layout>
+  );
+}
+
+export default MyOrders;
