@@ -10,7 +10,7 @@ const CartCard = ({product, handleDelete}) => {
         renderXCircleIcon = <XCircleIcon onClick={() => handleDelete(product.id)} className='w-6 h-6 cursor-pointer' />
     }
     return (
-        <div>
+        <div className='shadow-xl'>
             <div className='flex justify-between items-center p-6 hover:shadow-inner hover:bg-slate-100'>
                 <div className='flex items-center cursor-pointer'>
                     <img src={product.images} alt={product.title} className='w-16 h-16 object-cover rounded-md' />
