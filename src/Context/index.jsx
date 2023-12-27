@@ -4,7 +4,7 @@ export const ShoppingCartContext = createContext();
 
 export const ShoppingCartProvider = ({ children }) => {
   // Shopping Cart State - Count
-  const [count, setCount] = useState(0);
+
 
   // Product Detail State - Open/Close
   const [isProductDetailOpen, setIsProductDetailOpen] = useState(false);
@@ -31,6 +31,7 @@ export const ShoppingCartProvider = ({ children }) => {
 
   // Search
   const [search, setSearch] = useState("");
+  const [searchByCategory, setSearchByCategory] = useState("");
 
   useEffect(() => {
     fetch("https://api.escuelajs.co/api/v1/products")
@@ -43,23 +44,65 @@ export const ShoppingCartProvider = ({ children }) => {
       item.title.toLowerCase().includes(searchName.toLowerCase())
     );
   };
-  const filterItemsByCategory = (items, searchCategory) => {
+
+  const filterItemsByCategory = (items, searchByCategory) => {
+    const searchLower = searchByCategory.toLowerCase();
     return items?.filter((item) =>
-      item.category.toLowerCase().includes(searchCategory.toLowerCase())
+      item.category.name.toLowerCase().includes(searchLower)
     );
-  }
+  };
+
+  const filterBy = (searchType, items, search, searchByCategory) => {
+    if (searchType === "BY_TITLE") {
+      console.log();
+      return filterItemsByName(items, search);
+      // return console.log("BY_TITLE");
+    }
+    if (searchType === "BY_CATEGORY") {
+
+      console.log("BY_CATEGORY");
+      console.log(filterItemsByCategory(items, searchByCategory));
+      return (filterItemsByCategory(items, searchByCategory))  
+    }
+    if (searchType === "BY_TITLE_AND_CATEGORY") {
+      return filterItemsByCategory(
+        filterItemsByName(items, search),
+        searchByCategory
+      );
+    }
+    if (searchType === null) {
+      return items;
+    }
+  };
 
   useEffect(() => {
-    if (search) {
-      setFilteredItems(filterItemsByName(items, search));
-    }
-  }, [items, search]);
+   
+      if (search && !searchByCategory) {
+        setFilteredItems(filterBy("BY_TITLE", items, search, searchByCategory));
+      }
+      if (searchByCategory && !search) {
+        setFilteredItems(
+          filterBy("BY_CATEGORY", items, search, searchByCategory)
+        )
+      }
+      if (search && searchByCategory) {
+        setFilteredItems(
+          filterBy("BY_TITLE_AND_CATEGORY", items, search, searchByCategory)
+        );
+      }
+      if (!search && !searchByCategory) {
+        setFilteredItems(filterBy(null, items, search, searchByCategory))
+
+      }
+      
+
+
+    
+  }, [items, search, searchByCategory]);
 
   return (
     <ShoppingCartContext.Provider
       value={{
-        count,
-        setCount,
         isProductDetailOpen,
         openProductDetail,
         closeProductDetail,
@@ -76,7 +119,9 @@ export const ShoppingCartProvider = ({ children }) => {
         setItems,
         search,
         setSearch,
-        filteredItems
+        filteredItems,
+        searchByCategory,
+        setSearchByCategory,
       }}
     >
       {children}
