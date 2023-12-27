@@ -14,6 +14,7 @@ const Navbar = () => {
         <li className="font-semibold text-lg">
           <NavLink
             to="/"
+            onClick={() => context.setSearchByCategory("")}
           >
             Abarrotes
           </NavLink>
@@ -21,6 +22,7 @@ const Navbar = () => {
         <li>
           <NavLink
             to="/"
+            onClick={() => context.setSearchByCategory("")}
             className={({ isActive }) => `${isActive ? activeStyle : ""}`}
           >
             All
@@ -29,6 +31,7 @@ const Navbar = () => {
         <li>
           <NavLink
             to="/clothes"
+            onClick={() => context.setSearchByCategory("clothes")}
             className={({ isActive }) => `${isActive ? activeStyle : ""}`}
           >
             Clothes
@@ -37,6 +40,7 @@ const Navbar = () => {
         <li>
           <NavLink
             to="/electronics"
+            onClick={() => context.setSearchByCategory("electronics")}
             className={({ isActive }) => `${isActive ? activeStyle : ""}`}
           >
             Electronics
@@ -45,6 +49,7 @@ const Navbar = () => {
         <li>
           <NavLink
             to="/furniture"
+            onClick={() => context.setSearchByCategory("furniture")}
             className={({ isActive }) => `${isActive ? activeStyle : ""}`}
           >
             Furniture
@@ -53,6 +58,7 @@ const Navbar = () => {
         <li>
           <NavLink
             to="/toys"
+            onClick={() => context.setSearchByCategory("toys")}
             className={({ isActive }) => `${isActive ? activeStyle : ""}`}
           >
             Toys
@@ -60,10 +66,11 @@ const Navbar = () => {
         </li>
         <li>
           <NavLink
-            to="/sports"
+            to="/others"
+            onClick={() => context.setSearchByCategory("shoes")}
             className={({ isActive }) => `${isActive ? activeStyle : ""}`}
           >
-            Sports
+            Shoes
           </NavLink>
         </li>
       </ul>
@@ -108,7 +115,7 @@ const Navbar = () => {
 
             <ShoppingBagIcon className="h-5 w-5" />
             <div>
-              {context.count}
+              {context.carProducts.length}
             </div>
           </NavLink>
         </li>

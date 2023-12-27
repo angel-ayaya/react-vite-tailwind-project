@@ -10,31 +10,35 @@ function Home() {
   const context = useContext(ShoppingCartContext);
 
   const renderView = () => {
-    if (context.search?.length > 0) {
-      if (context.filteredItems?.length > 0) {
-        return (
-          <div className="grid gap-4 grid-cols-4 w-full max-w-screen-lg">
-            {context.filteredItems?.map((item) => (
-              <Card key={item.id} data={item} />
-            ))}
-          </div>
-        );
-        
-      } else {
-        return (
-          <div className="flex items-center justify-center w-full max-w-screen-lg">
-            <h1 className="text-2xl">No results found</h1>
-          </div>
-        );
-      }
-    } else {
+    // Verificar si hay elementos filtrados
+    if (context.filteredItems?.length > 0) {
       return (
         <div className="grid gap-4 grid-cols-4 w-full max-w-screen-lg">
-          {context.items?.map((item) => (
-            <Card key={item.id} data={item} />
+         { context.filteredItems.map((item) => (
+          <Card key={item.id} data={item} />
           ))}
         </div>
       );
+    } else if (context.filteredItems?.length === 0) {
+      // Caso cuando la búsqueda por filtro no devuelve resultados
+      return (
+        <div className="text-wrap mt-12">
+          <h1 className="text-6xl">There are not products to show :(</h1>
+        </div>
+      );
+    } else if (context.items?.length > 0) {
+      // Mostrar todos los elementos si no hay filtro
+      return (
+        <div className="grid gap-4 grid-cols-4 w-full max-w-screen-lg">
+         {
+           context.items.map((item) => <Card key={item.id} data={item} />
+           )
+         }
+        </div>
+      );
+    } else {
+      // Caso cuando no hay elementos para mostrar
+      return <p>Cargando productos...</p>;
     }
   };
 
@@ -52,6 +56,7 @@ function Home() {
         placeholder="Search a product"
         className="border border-black rounded-md p-4 w-80 h-10 mb-4 focus:outline-none focus:ring"
       />
+
       {renderView()}
       <ProductDetail />
     </Layout>
