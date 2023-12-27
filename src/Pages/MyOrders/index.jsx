@@ -9,11 +9,16 @@ function MyOrders() {
 
   return (
     <Layout>
-      {context.order.map( (order, index) => (
-        <Link key={index} to={`/my-orders/${order.id}`}>
-          <OrdersCard order={order} />
-        </Link>
-      ))}
+      <div className="flex items-center relative justify-center w-80 h-8 my-6">
+        <h1 className="text-2xl">My orders</h1>
+      </div>
+      <div className="flex flex-col items-center w-80">
+        {context.order.map((order, index) => (
+          <Link key={index} to={`/my-orders/${index}`}>
+            <OrdersCard order={order} />
+          </Link>
+        ))}
+      </div>
     </Layout>
   );
 }
