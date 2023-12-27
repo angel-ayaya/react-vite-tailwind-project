@@ -14,7 +14,6 @@ const CheckoutSideMenu = () => {
       (product) => product.id !== id
     );
     context.setCarProducts(filteredProducts);
-    context.setCount(context.count - 1);
   };
 
   const handleCheckout = () => {
@@ -26,7 +25,8 @@ const CheckoutSideMenu = () => {
     
     context.setOrder([...context.order, orderToAdd]);
     context.setCarProducts([]);
-    context.setCount(0);
+    context.setSearch(null)
+
     context.closeCheckoutSideMenu();
    
   };
