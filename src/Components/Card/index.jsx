@@ -8,7 +8,7 @@ const Card = (props) => {
 
   const cartFunction = (event, product) => {
     event.stopPropagation();
-    context.setCount(context.count + 1);
+
     context.setCarProducts([...context.carProducts, product]);
     context.openCheckoutSideMenu();
   };
